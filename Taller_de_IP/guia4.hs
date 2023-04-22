@@ -39,4 +39,11 @@ todosDigitosIguales :: Integer -> Bool
 todosDigitosIguales n | n < 10 = True
                         | otherwise = mod n 10 == mod (div n 10) 10 && todosDigitosIguales(div n 10)
 
+--8 Asumo que este está mal porqur no use cantDigitos en ningub momento
+cantDigitos :: Integer -> Integer
+cantDigitos n | n < 10 = 1
+                | otherwise = 1 + cantDigitos (div n 10)
 
+iesimoDigito :: Integer -> Integer -> Integer
+iesimoDigito a b    | b == 1 = mod a 10
+                    | b > 1 = iesimoDigito (div a 10) (b - 1)
