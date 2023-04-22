@@ -27,3 +27,11 @@ medioFact :: Integer -> Integer
 medioFact n     | n == 0 = 1
                 | n == 1 = 1
                 | n > 0 = n*medioFact (n-2)
+
+--6
+sumaDigitos :: Integer -> Integer
+sumaDigitos n   | n < 10 = n 
+                | otherwise = mod n 10 + sumaDigitos (div nRestado 10) 
+                    where nRestado = n - mod n 10
+                    
+
