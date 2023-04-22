@@ -18,11 +18,12 @@ esDivisible (a, b) | abs a  -  abs b == 0 = True
                 | otherwise = esDivisible (abs (a-b), abs b) 
 
 --4
-impar :: Integer -> Integer
-impar n = 2*n + 1
-
 sumaImpares :: Integer -> Integer
 sumaImpares n   | n == 1 = 1
                 | n > 0 = 2*n-1 + sumaImpares (n-1)
 
-    
+--5 
+medioFact :: Integer -> Integer 
+medioFact n     | n == 0 = 1
+                | n == 1 = 1
+                | n > 0 = n*medioFact (n-2)
