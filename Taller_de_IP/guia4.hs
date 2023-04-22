@@ -47,3 +47,22 @@ cantDigitos n | n < 10 = 1
 iesimoDigito :: Integer -> Integer -> Integer
 iesimoDigito a b    | b == 1 = mod a 10
                     | b > 1 = iesimoDigito (div a 10) (b - 1)
+
+--9 messi
+
+--10
+--a
+f1 :: Integer -> Integer
+f1 n | n == 0 = 1
+        | n > 0 = 2 ^ n + f1 (n-1)
+
+f2 :: Integer -> Integer -> Integer
+f2 n q | n == 1 = q
+        | n > 1 = q ^ n + f2 (n-1) q
+
+f3 :: Integer -> Integer -> Integer
+f3 n q | n == 1 = q
+        | n > 1 = q ^ (2*n) + f2 (2*n-1) q
+
+f4 :: Integer -> Integer -> Integer
+f4 n q = f3 n q - f2 (n-1) q
