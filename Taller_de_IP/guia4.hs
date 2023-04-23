@@ -66,3 +66,16 @@ f3 n q | n == 1 = q
 
 f4 :: Integer -> Integer -> Integer
 f4 n q = f3 n q - f2 (n-1) q
+
+--11
+--a 
+eAprox :: Integer -> Float
+eAprox n  | n == 0 = 1
+            | n > 0  = (1/ fromIntegral (auxFact n) ) + eAprox (n-1)
+
+auxFact :: Integer -> Integer
+auxFact n | n == 0 = 1
+                | n>0 = n * auxFact(n-1)
+
+e :: Float
+e = eAprox 10
