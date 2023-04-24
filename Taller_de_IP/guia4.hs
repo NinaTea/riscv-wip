@@ -39,7 +39,7 @@ todosDigitosIguales :: Integer -> Bool
 todosDigitosIguales n | n < 10 = True
                         | otherwise = mod n 10 == mod (div n 10) 10 && todosDigitosIguales(div n 10)
 
---8 Asumo que este está mal porqur no use cantDigitos en ningub momento
+--8 Asumo que este está mal porque no use cantDigitos en ningún momento
 cantDigitos :: Integer -> Integer
 cantDigitos n | n < 10 = 1
                 | otherwise = 1 + cantDigitos (div n 10)
@@ -94,3 +94,14 @@ auxPotencia :: Integer -> Integer -> Integer
 auxPotencia _ 0 = 0
 auxPotencia n m = n^m + auxPotencia n (m-1)
 
+--14
+sumaPotencia :: Integer -> Integer -> Integer -> Integer
+sumaPotencia q 0 m = 0
+sumaPotencia q n 0 = 0
+sumaPotencia 1 n m = n*m
+sumaPotencia q n m = (q^n + sumaPotencia q (n-1) m )* auxSumaPotencia q m
+
+auxSumaPotencia :: Integer -> Integer -> Integer
+auxSumaPotencia 1 0 = 0
+auxSumaPotencia 1 b = b
+auxSumaPotencia q b = q^b + auxPotencia q (b-1) 
