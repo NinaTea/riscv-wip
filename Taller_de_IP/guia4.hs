@@ -105,3 +105,12 @@ auxSumaPotencia :: Integer -> Integer -> Integer
 auxSumaPotencia 1 0 = 0
 auxSumaPotencia 1 b = b
 auxSumaPotencia q b = q^b + auxPotencia q (b-1) 
+
+--15
+sumaRacionales :: Integer -> Integer -> Float
+sumaRacionales 0 m = 0.0
+sumaRacionales n m = (fromIntegral n + sumaRacionales (n-1) m) *  auxSumaRacionales n m
+
+auxSumaRacionales :: Integer -> Integer -> Float
+auxSumaRacionales n 1 = 1.0
+auxSumaRacionales n m = 1.0 / fromIntegral m + auxSumaRacionales n (m-1)
