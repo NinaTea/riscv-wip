@@ -117,8 +117,9 @@ auxSumaRacionales n 1 = 1.0
 auxSumaRacionales n m = 1.0 / fromIntegral m + auxSumaRacionales n (m-1)
 
 --16
-
+--a
 menorDivisor :: Integer -> Integer
+menorDivisor 0 = 1
 menorDivisor 1 = 1
 menorDivisor n = auxMenorDivisor n (floor (sqrt (fromInteger n)))
 
@@ -126,3 +127,17 @@ auxMenorDivisor :: Integer -> Integer -> Integer
 auxMenorDivisor n m | m == 1 = n
                         | mod n m /= 0 = auxMenorDivisor n (m-1)
                         | otherwise = m
+
+--b
+esPrimo :: Integer -> Bool
+esPrimo 1 = False
+esPrimo p | menorDivisor p == p = True
+                |otherwise = False
+
+--c
+sonCoprimos :: Integer -> Integer -> Bool
+sonCoprimos p 1 = False
+sonCoprimos 1 q = False 
+sonCoprimos p q | mod p q == 0 = False
+                | mod q p == 0 = False
+                | otherwise = True
