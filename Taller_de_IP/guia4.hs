@@ -1,3 +1,4 @@
+
 --1 fibonacci
 
 fibonacci :: Integer -> Integer 
@@ -114,3 +115,14 @@ sumaRacionales n m = (fromIntegral n + sumaRacionales (n-1) m) *  auxSumaRaciona
 auxSumaRacionales :: Integer -> Integer -> Float
 auxSumaRacionales n 1 = 1.0
 auxSumaRacionales n m = 1.0 / fromIntegral m + auxSumaRacionales n (m-1)
+
+--16
+
+menorDivisor :: Integer -> Integer
+menorDivisor 1 = 1
+menorDivisor n = auxMenorDivisor n (floor (sqrt (fromInteger n)))
+
+auxMenorDivisor :: Integer -> Integer -> Integer
+auxMenorDivisor n m | m == 1 = n
+                        | mod n m /= 0 = auxMenorDivisor n (m-1)
+                        | otherwise = m
