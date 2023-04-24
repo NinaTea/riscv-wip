@@ -1,6 +1,5 @@
 
 --1 fibonacci
-
 fibonacci :: Integer -> Integer 
 fibonacci n | n == 0 = 0
             | n == 1 = 1
@@ -141,3 +140,10 @@ sonCoprimos 1 q = False
 sonCoprimos p q | mod p q == 0 = False
                 | mod q p == 0 = False
                 | otherwise = True
+
+--d he perecido ante el poder de los números primos y su aleatoriedad.
+-- En realidad, ya agoté mi capacidad de pensamiento por hoy.
+
+--17 idem fibonacci
+
+
