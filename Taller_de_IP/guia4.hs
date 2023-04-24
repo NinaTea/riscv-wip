@@ -79,3 +79,18 @@ auxFact n | n == 0 = 1
 
 e :: Float
 e = eAprox 10
+
+--12 ni idea, raro
+raizDe2Aprox :: Integer -> Float
+raizDe2Aprox n | n == 1 = 1
+                | n > 1 = 2 + (1/raizDe2Aprox (n-1)) - 1
+
+--13
+dobleSuma :: Integer -> Integer -> Integer
+dobleSuma 0 _ = 0
+dobleSuma n m = auxPotencia n m + dobleSuma (n-1) m
+
+auxPotencia :: Integer -> Integer -> Integer
+auxPotencia _ 0 = 0
+auxPotencia n m = n^m + auxPotencia n (m-1)
+
