@@ -35,6 +35,7 @@ todosDistintos (x:xs) = todosDistintos xs && (head xs /= x)
 
 --4
 hayRepetidos :: Eq t => [t] -> Bool
+hayRepetidos [] = False
 hayRepetidos [x] = False
 hayRepetidos (x:xs) = hayRepetidos xs || (head xs == x)
  
