@@ -46,5 +46,11 @@ quitar t (x:xs) | not (pertenece t (x:xs)) = (x:xs)
                 | t == x = xs
                 | otherwise = quitar t lista
                     where lista = (xs ++ [x])
+--6                    
+quitarTodos :: Eq t => t -> [t] -> [t] 
+quitarTodos t [] = []
+quitarTodos t (x:xs)| not (pertenece t (x:xs)) =  (x:xs)
+                    | x == t && not(pertenece t xs) = xs
+                    | x == t && pertenece t xs = quitarTodos t xs 
+                     | x /= t && pertenece t xs = quitarTodos t xs ++ [x]
 
- 
