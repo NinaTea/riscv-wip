@@ -27,3 +27,10 @@ todosIguales [] = False
 todosIguales [x] = True
 todosIguales (x:xs) = todosIguales xs && (head xs == x)
 
+--3
+todosDistintos :: Eq t => [t] -> Bool
+todosDistintos [] = True
+todosDistintos [t] = True
+todosDistintos (x:xs) = todosDistintos xs && (head xs /= x)
+
+
