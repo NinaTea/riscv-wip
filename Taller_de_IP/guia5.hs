@@ -38,4 +38,13 @@ hayRepetidos :: Eq t => [t] -> Bool
 hayRepetidos [] = False
 hayRepetidos [x] = False
 hayRepetidos (x:xs) = hayRepetidos xs || (head xs == x)
+
+--5
+quitar :: Eq t => t -> [t] -> [t]
+quitar t [] = []
+quitar t (x:xs) | not (pertenece t (x:xs)) = (x:xs)
+                | t == x = xs
+                | otherwise = quitar t lista
+                    where lista = (xs ++ [x])
+
  
