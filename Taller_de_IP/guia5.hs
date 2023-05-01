@@ -21,3 +21,9 @@ pertenece :: Eq t => t -> [t] -> Bool
 pertenece _ [] = False
 pertenece t (x:xs) | t == x = True
                     | otherwise = pertenece t xs  
+--2 
+todosIguales :: Eq x => [x] -> Bool
+todosIguales [] = False
+todosIguales [x] = True
+todosIguales (x:xs) = todosIguales xs && (head xs == x)
+
