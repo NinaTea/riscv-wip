@@ -53,4 +53,41 @@ quitarTodos t (x:xs)| not (pertenece t (x:xs)) =  (x:xs)
                     | x == t && not(pertenece t xs) = xs
                     | x == t && pertenece t xs = quitarTodos t xs 
                      | x /= t && pertenece t xs = quitarTodos t xs ++ [x]
+--2.7. eliminarRepetidos :: (Eq t) => [t] -> [t] que deja en la lista una ´unica aparici´on de cada elemento, eliminando
+--las repeticiones adicionales.
+--2.8
+--2.9
+
+--3
+--3.1
+sumatoria :: [Integer] -> Integer
+sumatoria [] = 0
+sumatoria (x:xs) = sumatoria xs + x
+
+--3.2
+productoria :: [Integer] -> Integer
+productoria [] = 1
+productoria (x:xs) =  x * productoria xs
+
+--3.3
+maximo :: [Integer] -> Integer
+maximo [x] = x
+maximo (x:xs) | x >= head xs = maximo (x:tail xs)
+                | otherwise = maximo xs
+
+--3.4
+sumarN :: Integer -> [Integer] -> [Integer]
+sumarN x [y] = [ x + y ]
+sumarN x (y:ys) = x+y: sumarN x ys
+
+--3.5
+sumarElPrimero :: [Integer] -> [Integer]
+sumarElPrimero (x:xs) = x+x: sumarN x xs
+
+--3.7
+sumarElUltimo :: [Integer] -> [Integer]
+sumarElUltimo (x:xs) | length (tail xs) > 1 = sumarElUltimo (x:tail xs)
+--  
+                     
+                     
 
