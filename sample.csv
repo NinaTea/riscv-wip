@@ -1,0 +1,7 @@
+nro de LU ( str ) , materia ( str ) , fecha ( str ) , nota ( float )
+123/20, fisica, 5/99,1
+123/20, quimica, 5/99,10
+05/20, biologia, 5/99,9
+123/20, fisica, 5/99,10
+123/20, quimica, 5/99,7
+05/20, biologia, 5/99,5
