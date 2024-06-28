@@ -126,7 +126,7 @@ texto_concatenacion_t* texto_concatenar(texto_cualquiera_t* izquierda, texto_cua
  * Funciones a implementar:
  *   - texto_tamanio_total
  */
-bool EJERCICIO_1B_HECHO = false;
+bool EJERCICIO_1B_HECHO = true;
 
 /**
  * Calcula el tamaño total de un `texto_cualquiera_t`. Es decir, suma todos los
@@ -136,26 +136,24 @@ bool EJERCICIO_1B_HECHO = false;
  *   - texto: El texto en cuestión.
  */
 uint64_t texto_tamanio_total(texto_cualquiera_t* texto) {
+	
 	if (texto->tipo == TEXTO_LITERAL) {
 		texto_literal_t* literal = (texto_literal_t*) texto;
-		// ¿Cómo calculo el tamaño del texto que representa un literal?
-		return 0;
+		if (texto -> usos != 0){
+			
+			uint64_t res = literal->tamanio*literal->usos;
+			return res;
+		} else{
+			return literal->tamanio;
+		}
+		
 	} else {
 		texto_concatenacion_t* concatenacion = (texto_concatenacion_t*) texto;
-		// ¿Cómo calculo el tamaño del texto que representa una concatenación?
-		return 0;
+		uint64_t a = texto_tamanio_total(concatenacion->derecha);
+		uint64_t b = texto_tamanio_total(concatenacion->izquierda);
+		return a + b;
+		
 	}
-	/*  uint64_t res = 0
-		una forma bien cabeza y nada optima seria tener los structs del texto en un array
-		despues iterar sobre cada elemento y ver si es de tipo texto concatenacion
-		si lo es, sumo, sino no.
-
-		El problema es que al armar el array. De todas maneras tendria que recorrer el texto 
-		e ir contando cuantos bytes tengo para pedirle a malloc para reservar memoria, poner los structs... 
-
-		La otra forma es recorrerlo como un grafo e ir guardandome los punteros a los structs asi ya se donde volver
-		mientras voy sumando los tama;os
-	*/
 }
 
 /**
@@ -164,7 +162,7 @@ uint64_t texto_tamanio_total(texto_cualquiera_t* texto) {
  * Funciones a implementar:
  *   - texto_chequear_tamanio
  */
-bool EJERCICIO_1C_HECHO = false;
+bool EJERCICIO_1C_HECHO = true;
 
 /**
  * Chequea si los tamaños de todos los nodos literales internos al parámetro
@@ -178,13 +176,14 @@ bool EJERCICIO_1C_HECHO = false;
 bool texto_chequear_tamanio(texto_cualquiera_t* texto) {
 	if (texto->tipo == TEXTO_LITERAL) {
 		texto_literal_t* literal = (texto_literal_t*) texto;
-		// ¿Cómo chequeo si un literal tiene el tamaño bien calculado?
-		return false;
+		size_t tam = strlen(literal->contenido);
+		return tam == (literal->tamanio);
+
 	} else {
 		texto_concatenacion_t* concatenacion = (texto_concatenacion_t*) texto;
-		// ¿Cómo chequeo si una concatenación tiene el tamaño de sus literales
-		//  bien calculado?
-		return false;
+		bool a = texto_chequear_tamanio(concatenacion->derecha);
+		bool b = texto_chequear_tamanio(concatenacion->izquierda);
+		return a && b;
 	}
 }
 

@@ -298,7 +298,7 @@ texto_concatenar:
 ; Funciones a implementar:
 ;   - texto_tamanio_total
 global EJERCICIO_1B_HECHO
-EJERCICIO_1B_HECHO: db FALSE ; Cambiar por `TRUE` para correr los tests.
+EJERCICIO_1B_HECHO: db TRUE ; Cambiar por `TRUE` para correr los tests.
 
 ; Calcula el tamaño total de un `texto_cualquiera_t`. Es decir, suma todos los
 ; campos `tamanio` involucrados en el mismo.
@@ -307,6 +307,69 @@ EJERCICIO_1B_HECHO: db FALSE ; Cambiar por `TRUE` para correr los tests.
 ;   - texto: El texto en cuestión.
 global texto_tamanio_total
 texto_tamanio_total:
+	;rdi = texto_cualquiera* texto
+
+	;prologo
+	push rbp
+	mov rbp, rsp
+
+	push r12
+	push r13
+	push r14
+	push r15
+
+	cmp dword [rdi + TEXTO_CUALQUIERA_OFFSET_TIPO], 0
+	jne .caso_no_literal
+
+.caso_literal:
+	;; estoy en el caso base
+	; xor r8, r8
+	; mov r8, rdi
+
+	cmp dword [rdi + TEXTO_LITERAL_OFFSET_USOS], 0
+	jne .caso_mas_usos
+
+	.caso_0_usos:
+		xor rax, rax
+		mov rax, [rdi + TEXTO_LITERAL_OFFSET_TAMANIO]
+		jmp .fin
+
+	.caso_mas_usos:
+		xor rax, rax
+		mov rax, [rdi + TEXTO_LITERAL_OFFSET_USOS]
+		xor r9, r9
+		mov r9, [rdi + TEXTO_LITERAL_OFFSET_TAMANIO]
+		mul r9 ; rax = usos * tama;o
+		
+		jmp .fin
+
+
+.caso_no_literal:
+	;puedo romper la abi internamente?
+	;total, yo se que en r12 y en r13 voy a guardar la suma
+	; y en realidad solo importa preservarlos
+	;cuando salgo de mi funcion al final de todo
+	xor r10, r10
+	mov r10, [rdi + TEXTO_CONCATENACION_OFFSET_DERECHA]
+	mov r14, [rdi + TEXTO_CONCATENACION_OFFSET_IZQUIERDA]
+	mov rdi, r10
+	call texto_tamanio_total ; en rax tengo el tama;o
+	mov r12, rax
+	mov rdi, r14
+	call texto_tamanio_total
+	; en r12 tengo el rax anterior
+	; en rax tengo un nuevo tam
+
+	add rax, r12
+	jmp .fin
+
+.fin:
+	;epilogo
+	pop r15
+	pop r14
+	pop r13
+	pop r12
+	pop rbp
 	ret
 
 ; Marca el ejercicio 1C como hecho (`true`) o pendiente (`false`).
@@ -314,7 +377,7 @@ texto_tamanio_total:
 ; Funciones a implementar:
 ;   - texto_chequear_tamanio
 global EJERCICIO_1C_HECHO
-EJERCICIO_1C_HECHO: db FALSE ; Cambiar por `TRUE` para correr los tests.
+EJERCICIO_1C_HECHO: db TRUE ; Cambiar por `TRUE` para correr los tests.
 
 ; Chequea si los tamaños de todos los nodos literales internos al parámetro
 ; corresponden al tamaño de la cadenas que apuntadan.
@@ -325,4 +388,64 @@ EJERCICIO_1C_HECHO: db FALSE ; Cambiar por `TRUE` para correr los tests.
 ;   - texto: El texto verificar.
 global texto_chequear_tamanio
 texto_chequear_tamanio:
+	;rdi = texto_cualquiera* texto
+
+	;prologo
+	push rbp
+	mov rbp, rsp
+
+	push r12 ;d
+	push r13 ;a
+	push r14 ;d
+	push r15 ;a
+
+	cmp dword [rdi + TEXTO_CUALQUIERA_OFFSET_TIPO], 0
+	jne .caso_no_literal
+
+.caso_literal:
+	;; estoy en el caso base
+	;; usar strlen seria un problema? estoy llamando
+	;; a la funcion con la pila alineada, no deberia
+	;; serlo
+
+	mov r14, rdi ;necesito guardarlo para cuando llame a strlen 
+	mov rdi, [rdi + TEXTO_LITERAL_OFFSET_CONTENIDO]
+	call strlen
+	;en rax tengo el tamanio
+
+	cmp rax, [r14 + TEXTO_LITERAL_OFFSET_TAMANIO]
+	je .true
+	mov qword rax, 0
+	jmp .fin
+
+.true:
+	mov qword rax, 1
+	jmp .fin 
+	
+.caso_no_literal:
+	;puedo romper la abi internamente?
+	;total, yo se que en r12 voy a guardar la suma
+	;y en realidad solo importa preservarlos
+	;cuando salgo de mi funcion al final de todo
+	xor r10, r10
+	mov r10, [rdi + TEXTO_CONCATENACION_OFFSET_DERECHA]
+	mov r14, [rdi + TEXTO_CONCATENACION_OFFSET_IZQUIERDA]
+	mov rdi, r10
+	call texto_chequear_tamanio ; en rax tengo el tama;o
+	mov r12, rax
+	mov rdi, r14
+	call texto_chequear_tamanio
+	; en r12 tengo el rax anterior
+	; en rax tengo un nuevo tam
+
+	and rax, r12
+	jmp .fin
+
+.fin:
+	;epilogo
+	pop r15
+	pop r14
+	pop r13
+	pop r12
+	pop rbp
 	ret
