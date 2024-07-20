@@ -6,6 +6,21 @@ RISC CPUs have lots of registers and a modest core instruction set. This modular
 
 RISC-V came out in 2010.
 
+Es little endian.
+
+All instructions are encoded in the same length*
+
+## Flashero
+There is no Stack Pointer. RISC-V itself does not specify a predefined stack pointer register. While most architectures like x86, MIPS, and ARM include a dedicated stack pointer register, the choice of which register to use as the stack pointer in RISC-V is determined by the ABI (Application Binary Interface). 
+
+Technically, any register other than x0 can be used as a stack pointer.
+
+There are no push nor pop instructions. 
+
+Stack operations are typically achieved using a combination of load and store instructions, in conjunction with additions, subtractions, and the stack pointer (as defined by the ABI).
+
+There are no subroutine call or return instructions. This is very similar to the previous features above: Subroutine call and return instructions are available as pseudoinstructions, which are performed by jump-and-link instructions.
+
 ## Privileged Levels
 
 From least to most privileged:
